@@ -86,7 +86,7 @@ pacstrap /mnt base linux linux-firmware $editor $terminal $browser libxinerama x
 
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt #curl -w $scriptvol2
-
+echo Welcome to your new arch system! How is it to use arch, btw?
 
 
 
