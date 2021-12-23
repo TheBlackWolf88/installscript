@@ -72,20 +72,25 @@ then
     mkdir -p /mnt/boot
     mount $diskdev"3" /mnt
     mount $diskdev"1" /mnt/boot
+    bootloader="grub efibootmgr"
 else 
     mkfs.$fs $diskdev"1"
     mount $diskdev"1" /mnt
+    bootloader="grub"
 fi
 swapon $diskdev"2"
 
 read -p "What editor you wanna install? (package name)" editor
 read -p "What terminal emulator you wanna install? (package name)" terminal
 read -p "What browser you wanna install? (package name)" browser
+read -p "Intel or AMD?" ucode
+ucode=${ucode,,}"-ucode"
 
-pacstrap /mnt base linux linux-firmware $editor $terminal $browser libxinerama xorg-server xorg-server-common xorg-setxkbmap xorg-xauth xorg-xinit xorg-xkill xorg-xmodmap xorg-xrdb base-devel git networkmanager 
+pacstrap /mnt base linux linux-firmware $editor $terminal $browser libxinerama xorg-server xorg-server-common xorg-setxkbmap xorg-xauth xorg-xinit xorg-xkill xorg-xmodmap xorg-xrdb base-devel git networkmanager $ucode $bootloader ranger dunst neofetch feh picom
 
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt echo Welcome to your new arch system! How is it to use arch, btw? && echo Hiya!
+cp /root/installscript/archinstall2.sh /mnt/archvol2.sh
+arch-chroot /mnt sh archvol2.sh
 
 
 
