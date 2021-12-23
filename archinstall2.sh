@@ -6,11 +6,12 @@ hwclock --systohc
 echo "I'm gonna generate the en_US.UTF-8 locale, if you need others read the archwiki and add them at the end."
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 locale-gen
-echo "en_US.UTF-8" > /etc/locale.conf
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "KEYMAP=hu" > /etc/vconsole.conf
 read -p "Gimme a hostname" hostname
 echo $hostname > /etc/hostname
 mkinitcpio -P
+echo "Pick a password for root!"
 passwd
 read -p "We're creating a user for you, what's your name?" uname
 useradd -m -G wheel $uname
@@ -34,7 +35,7 @@ then
     cd /home/$uname/dotfiles-dwm
     cp -rt /home/$uname/.config alacritty dunst dwm dwmbar neofetch ranger picom.conf
     cp wall.jpg /home/$uname/.wall.jpg
-    cp /home/$uname/ .bashrc .xinitrc
+    cp -t /home/$uname/ .bashrc .xinitrc
     cp startdwm /bin/startdwm
     cd /home/$uname/.config/dwm
     make
