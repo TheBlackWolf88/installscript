@@ -9,7 +9,7 @@ read diskdev
 wipefs -a $diskdev
 echo "What partition table you wanna use? (DOS/GPT)"
 read parttabledata
-parttable = $(parttabledata,,)
+parttable="${parttabledata,,}"
 echo "How large you want your swap? (General rule: <1G -> same as ram; >1G -> half of ram)"
 read swapsize
 if [ $parttable = "gpt" ]
@@ -24,7 +24,7 @@ then
         echo n;
         echo ;
         echo ;
-        echo "+$(swapsize)G"
+        echo +$swapsize"G"
         echo n;
         echo ;
         echo ;
@@ -46,7 +46,7 @@ then
         echo ;
         echo ;
         echo ;
-        echo -$(swapsize)G
+        echo -$swapsize"G"
         echo ;
         echo n;
         echo ;
@@ -65,24 +65,24 @@ fi
 
 read -p "What do you want for your filesystem? (ext4/btrfs/any other shit just spell it right)" fs
 mkswap $(diskdev)2
-if [ $parttable = gpt]
+if [ $parttable = gpt ]
 then
-    mkfs.vfat $(diskdev)1
-    mkfs.$(fs) $(diskdev)3
+    mkfs.vfat $diskdev"1"
+    mkfs.$fs $diskdev"3"
     mkdir -p /mnt/boot
-    mount $(diskdev)3 /mnt
-    mount $(diskdev)1 /mnt/boot
+    mount $diskdev"3" /mnt
+    mount $diskdev"1" /mnt/boot
 else 
-    mkfs.$(fs) $(diskdev)1
-    mount $(diskdev)1 /mnt
+    mkfs.$fs $diskdev"1"
+    mount $diskdev"1" /mnt
 fi
-swapon $(diskdev)2
+swapon $diskdev"2"
 
 read -p "What editor you wanna install? (package name)" editor
 read -p "What terminal emulator you wanna install? (package name)" terminal
 read -p "What browser you wanna install? (package name)" browser
 
-pacstrap /mnt base linux linux-firmware $editor $terminal $browser libxinerama xorg-server xorg-server-common xorg-xsetkbmap xorg-xauth xorg-xinit xorg-xkill xorg-xmodmap xorg-xrdb base-devel git networkmanager 
+pacstrap /mnt base linux linux-firmware $editor $terminal $browser libxinerama xorg-server xorg-server-common xorg-setxkbmap xorg-xauth xorg-xinit xorg-xkill xorg-xmodmap xorg-xrdb base-devel git networkmanager 
 
 read -p "Do you wanna mount any other drive? (y/N) (It won't be formatted, only mounted and added to fstab)" otherdev
 if [ $otherdev = "y"]
@@ -106,7 +106,7 @@ fi
 
 
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt curl -w $scriptvol2
+arch-chroot /mnt #curl -w $scriptvol2
 
 
 
