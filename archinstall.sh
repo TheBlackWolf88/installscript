@@ -64,7 +64,7 @@ else
 fi
 
 read -p "What do you want for your filesystem? (ext4/btrfs/any other shit just spell it right)" fs
-mkswap $(diskdev)2
+mkswap $diskdev"2"
 if [ $parttable = gpt ]
 then
     mkfs.vfat $diskdev"1"
