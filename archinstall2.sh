@@ -5,6 +5,7 @@ ln -sf /usr/share/zoneinfo/$time /etc/localtime
 hwclock --systohc
 echo "I'm gonna generate the en_US.UTF-8 locale, if you need others read the archwiki and add them at the end."
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+locale-gen
 echo "en_US.UTF-8" > /etc/locale.conf
 echo "KEYMAP=hu" > /etc/vconsole.conf
 read -p "Gimme a hostname" hostname
@@ -28,7 +29,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 read -p "You wanna use dan's DWM setup? (y/N)" dwm
 if [ $dwm='y' ]
 then
-    git clone https://github.com/TheBlackWolf88/dotfiles-dwm /home/$uname
+    git clone https://github.com/TheBlackWolf88/dotfiles-dwm /home/$uname/dotfiles-dwm
     mkdir -p /home/$uname/.config
     cd /home/$uname/dotfiles-dwm
     cp -rt /home/$uname/.config alacritty dunst dwm dwmbar neofetch ranger picom.conf
