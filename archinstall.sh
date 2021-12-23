@@ -84,27 +84,6 @@ read -p "What browser you wanna install? (package name)" browser
 
 pacstrap /mnt base linux linux-firmware $editor $terminal $browser libxinerama xorg-server xorg-server-common xorg-setxkbmap xorg-xauth xorg-xinit xorg-xkill xorg-xmodmap xorg-xrdb base-devel git networkmanager 
 
-read -p "Do you wanna mount any other drive? (y/N) (It won't be formatted, only mounted and added to fstab)" otherdev
-if [ $otherdev = "y"]
-then
-    while : 
-    do
-        read -p "Specify your device" newdev
-        read -p "Specify its mount point (eg.: /mnt/media/hdd)" mount_point
-        mkdir -p $mount_point
-        mount $newdev $mount_point
-        read -p "An other one? (y/N)" ans2
-        if [ $ans2 = y ]
-        then
-            continue
-        else
-            break
-        fi
-else
-    echo ""
-fi
-
-
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt #curl -w $scriptvol2
 
