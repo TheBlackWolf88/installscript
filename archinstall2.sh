@@ -16,14 +16,14 @@ useradd -m -G wheel $uname
 echo "We're gonna need a passwd for $uname"
 passwd $uname
 
-cmd="pacman -Qs efibootmgr"
-
-if [ -n "$cmd" ]
+x=`pacman -Qs efibootmgr`
+if [ -n "$x" ]
 then grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 else 
     read -p "Sorry for the inconvinience, but I forgot, what's your disk, that you're installing on, tell me again!" dev
     grub-install --target=i386-pc $dev
 fi
+
 grub-mkconfig -o /boot/grub/grub.cfg
 read -p "You wanna use dan's DWM setup? (y/N)" dwm
 if [ $dwm='y' ]
@@ -41,4 +41,5 @@ then
     echo "You installed dan's dwm setup, reboot and after login type 'startx'"
 else
     echo "You do you"
+fi
 echo "Installation finished. Exit chroot with 'exit', and 'reboot' your machine with 'reboot'"
