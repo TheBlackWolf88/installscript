@@ -85,8 +85,8 @@ read -p "What browser you wanna install? (package name)" browser
 pacstrap /mnt base linux linux-firmware $editor $terminal $browser libxinerama xorg-server xorg-server-common xorg-setxkbmap xorg-xauth xorg-xinit xorg-xkill xorg-xmodmap xorg-xrdb base-devel git networkmanager 
 
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt #curl -w $scriptvol2
-echo Welcome to your new arch system! How is it to use arch, btw?
+arch-chroot /mnt echo Welcome to your new arch system! How is it to use arch, btw? && echo Hiya!
+
 
 
 
