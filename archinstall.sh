@@ -69,7 +69,7 @@ if [ $parttable = gpt ]
 then
     mkfs.vfat $diskdev"1"
     mkfs.$fs $diskdev"3"
-    mkdir -p /mnt/boot
+    mkdir /mnt/boot
     mount $diskdev"3" /mnt
     mount $diskdev"1" /mnt/boot
     bootloader="grub efibootmgr"
